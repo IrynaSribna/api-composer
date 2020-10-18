@@ -1,3 +1,8 @@
 spring:
   main:
     banner-mode: 'off'
+
+xkcd:
+  url:
+    latest: https://xkcd.com/info.0.json
+    by-id: https://xkcd.com/{id}/info.0.json
