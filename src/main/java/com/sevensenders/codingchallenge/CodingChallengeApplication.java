@@ -1,5 +1,7 @@
 package com.sevensenders.codingchallenge;
 
+import com.sevensenders.codingchallenge.domain.ComicsProvider;
+import com.sevensenders.codingchallenge.infrastructure.services.PdlLookupService;
 import com.sevensenders.codingchallenge.infrastructure.services.XkcdLookupService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +16,15 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CodingChallengeApplication implements CommandLineRunner {
 
-	private XkcdLookupService xkcdLookupService;
+	private ComicsProvider comicsProvider;
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(CodingChallengeApplication.class);
 		app.run(args);
-
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(xkcdLookupService.get());
+        System.out.println(comicsProvider.provide());
 	}
 }

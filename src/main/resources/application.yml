@@ -6,3 +6,6 @@ xkcd:
   url:
     latest: https://xkcd.com/info.0.json
     by-id: https://xkcd.com/{id}/info.0.json
+
+poorly-drawn-lines:
+  url: http://feeds.feedburner.com/PoorlyDrawnLines

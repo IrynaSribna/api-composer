@@ -1,6 +1,6 @@
 package com.sevensenders.codingchallenge.infrastructure.rest.boundaries.json;
 
-import static com.sevensenders.codingchallenge.infrastructure.rest.boundaries.json.ComicsMapper.map;
+import static com.sevensenders.codingchallenge.infrastructure.rest.boundaries.json.JsonComicsMapper.map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sevensenders.codingchallenge.domain.models.Comic;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 
-class ComicsMapperTest {
+class JsonComicsMapperTest {
 
     @Test
     public void returnComic() {

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ComicsMapper {
+public class JsonComicsMapper {
 
     public static Comic map(XkcdItemDTO entity) {
 

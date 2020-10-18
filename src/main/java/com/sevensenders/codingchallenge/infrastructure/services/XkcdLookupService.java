@@ -1,6 +1,6 @@
 package com.sevensenders.codingchallenge.infrastructure.services;
 
-import static com.sevensenders.codingchallenge.infrastructure.rest.boundaries.json.ComicsMapper.map;
+import static com.sevensenders.codingchallenge.infrastructure.rest.boundaries.json.JsonComicsMapper.map;
 
 import com.sevensenders.codingchallenge.domain.daos.ComicsDao;
 import com.sevensenders.codingchallenge.domain.models.Comic;
