@@ -25,5 +25,4 @@ public class JsonComicsMapper {
                 Integer.parseInt(entity.getDay())))
             .build();
     }
-
 }

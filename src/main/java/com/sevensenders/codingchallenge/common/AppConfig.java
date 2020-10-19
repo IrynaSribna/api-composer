@@ -18,7 +18,8 @@ public class AppConfig {
         RestTemplate restTemplate = new RestTemplate();
         RssChannelHttpMessageConverter rssChannelConverter = new RssChannelHttpMessageConverter();
         rssChannelConverter.setSupportedMediaTypes(
-            Collections.singletonList(MediaType.TEXT_XML));
+            Collections.singletonList(MediaType.TEXT_XML)
+        );
         restTemplate.getMessageConverters().add(rssChannelConverter);
         return restTemplate;
     }
