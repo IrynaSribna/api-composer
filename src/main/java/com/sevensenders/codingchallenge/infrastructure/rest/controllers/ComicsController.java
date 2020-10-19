@@ -17,12 +17,12 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/comics-service/", produces = "application/json")
+@RequestMapping(value = "/", produces = "application/json")
 public class ComicsController {
 
     private ComicsProvider comicsProvider;
 
-    @GetMapping(value = "comics")
+    @GetMapping
     public ResponseEntity<Collection<Comic>> getComics() {
 
         return new ResponseEntity<>(comicsProvider.provide(), OK);
