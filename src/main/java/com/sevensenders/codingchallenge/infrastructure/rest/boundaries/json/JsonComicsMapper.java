@@ -7,12 +7,13 @@ import java.time.LocalDate;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonComicsMapper {
 
-    public static Comic map(XkcdItemDTO entity) {
+    public static Comic map(@NonNull XkcdItemDTO entity) {
 
         return Comic.builder()
             .pictureUrl(entity.getImg())

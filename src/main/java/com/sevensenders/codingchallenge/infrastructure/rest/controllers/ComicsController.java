@@ -24,6 +24,7 @@ public class ComicsController {
 
     @GetMapping(value = "comics")
     public ResponseEntity<Collection<Comic>> getComics() {
+
         return new ResponseEntity<>(comicsProvider.provide(), OK);
     }
 }

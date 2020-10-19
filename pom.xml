@@ -17,6 +17,8 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<lombok.version>1.18.12</lombok.version>
+		<resilience4j.version>1.6.1</resilience4j.version>
+		<rometools.version>1.15.0</rometools.version>
 	</properties>
 
 	<dependencies>
@@ -36,6 +38,18 @@
 			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot2</artifactId>
+			<version>${resilience4j.version}</version>
+		</dependency>
+
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>${rometools.version}</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

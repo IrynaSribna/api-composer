@@ -1,13 +1,17 @@
 package com.sevensenders.codingchallenge.infrastructure.rest.boundaries.xml;
 
+import static java.util.stream.Collectors.toList;
+
+import com.rometools.rome.feed.rss.Channel;
+import com.rometools.rome.feed.rss.Item;
 import com.sevensenders.codingchallenge.domain.models.Comic;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.w3c.dom.Element;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -16,23 +20,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class XmlComicsMapper {
 
-    public static Comic map(Element element) {
+    public static List<Comic> map(Channel channel) {
 
-        return Comic.builder()
-            .pictureUrl(
-                parseText(
-                    element.getElementsByTagNameNS("*", "encoded").item(0).getFirstChild().getTextContent()
-                )
-            )
-            .title(element.getElementsByTagName("title").item(0).getTextContent())
-            .webUrl(element.getElementsByTagName("link").item(0).getTextContent())
-            .publishingDate(
-                parseLocalDate(
-                    element.getElementsByTagName("pubDate").item(0).getTextContent()
-                )
-            )
-            .build();
+        return channel != null
+            ? channel.getItems()
+                .stream()
+                .map(x -> itemToComic.apply(x))
+                .collect(toList())
+            : Collections.emptyList();
     }
+
+    private static Function<Item, Comic> itemToComic = item -> Comic.builder()
+        .publishingDate(item.getPubDate()
+            .toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+        )
+        .webUrl(item.getUri())
+        .title(item.getTitle())
+        .pictureUrl(parseText(
+            item.getContent().getValue())
+        )
+        .build();
 
     private static String parseText(String text) {
         String patternString = "img (loading=\"lazy\" )?src=\"([^\"]+)";
@@ -41,12 +50,6 @@ public class XmlComicsMapper {
         if (matcher.find()) {
             return matcher.group(2);
         }
-        return null;
-    }
-
-    private static LocalDate parseLocalDate(String text) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z");
-
-        return LocalDate.parse(text, formatter);
+        return "";
     }
 }

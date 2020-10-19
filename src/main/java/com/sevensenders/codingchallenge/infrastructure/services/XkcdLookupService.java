@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 
 @Service
 public class XkcdLookupService implements ComicsDao {
@@ -38,6 +40,7 @@ public class XkcdLookupService implements ComicsDao {
     }
 
     @Override
+    @CircuitBreaker(name = "xkcdLookupService", fallbackMethod = "getDefaultComics")
     public List<Comic> get() {
         List<Comic> comics = new LinkedList<>();
 

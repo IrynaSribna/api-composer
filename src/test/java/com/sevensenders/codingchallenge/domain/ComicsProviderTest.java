@@ -64,5 +64,4 @@ public class ComicsProviderTest {
         assertThat(result)
             .isEqualTo(expected);
     }
-
 }

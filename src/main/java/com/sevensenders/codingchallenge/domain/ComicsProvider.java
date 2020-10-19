@@ -17,11 +17,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ComicsProvider {
 
-    private List<ComicsDao> picturesDaos;
+    private final List<ComicsDao> picturesDaos;
 
     public List<Comic> provide() {
         List<Comic> comics = new LinkedList<>();
-
         for (ComicsDao dao : picturesDaos) {
             comics.addAll(dao.get());
         }

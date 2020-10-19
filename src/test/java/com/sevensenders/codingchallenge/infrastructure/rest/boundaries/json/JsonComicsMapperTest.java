@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 class JsonComicsMapperTest {
 
     @Test
-    public void returnComic() {
+    void returnComic() {
 
         // given
         XkcdItemDTO xkcdItemDTO = XkcdItemDTO.builder()
