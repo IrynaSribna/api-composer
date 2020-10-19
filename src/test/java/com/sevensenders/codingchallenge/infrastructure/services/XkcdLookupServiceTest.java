@@ -3,6 +3,7 @@ package com.sevensenders.codingchallenge.infrastructure.services;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 import com.sevensenders.codingchallenge.domain.models.Comic;
 import com.sevensenders.codingchallenge.infrastructure.rest.models.XkcdItemDTO;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestOperations;
@@ -68,5 +70,20 @@ public class XkcdLookupServiceTest {
             .isEqualTo("Title");
         assertThat(result.get(0).getPictureUrl())
             .isEqualTo("img");
+    }
+
+    @Test
+    public void returnEmptyCollectionWhenGetsNotFound() {
+        // given
+        doReturn(
+            new ResponseEntity<>(HttpStatus.NOT_FOUND)
+        ).when(rest).exchange(any(RequestEntity.class), any(Class.class));
+
+        // when
+        List<Comic> result = xkcdLookupService.get();
+
+        // then
+        assertThat(result)
+            .isEmpty();
     }
 }

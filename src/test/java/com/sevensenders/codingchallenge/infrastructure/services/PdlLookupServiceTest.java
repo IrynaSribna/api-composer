@@ -79,6 +79,22 @@ public class PdlLookupServiceTest {
             .isEqualTo("http://img.png");
     }
 
+    @Test
+    public void returnEmptyCollectionWhenGetsNull() throws ParseException {
+        // given
+        Channel channel = null;
+
+        when(rest.getForObject(eq(URL), any(Class.class)))
+            .thenReturn(channel);
+
+        // when
+        List<Comic> result = pdlLookupService.get();
+
+        // then
+        assertThat(result)
+            .isEmpty();
+    }
+
     private String getValue() {
         return "<img loading=\"lazy\" src=\"http://img.png\" " +
             "alt=\"\" class=\"wp-image-7791\" width=\"810\" height=\"719\" srcset=\"" +

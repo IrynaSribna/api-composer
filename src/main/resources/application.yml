@@ -9,17 +9,3 @@ xkcd:
 
 poorly-drawn-lines:
   url: http://feeds.feedburner.com/PoorlyDrawnLines
-
-resilience4j.circuitbreaker:
-  configs:
-    default:
-      minimumNumberOfCalls: 3
-      permittedNumberOfCallsInHalfOpenState: 1
-      automaticTransitionFromOpenToHalfOpenEnabled: true
-      waitDurationInOpenState: 5s
-      failureRateThreshold: 5
-      resetTimeOut: 1s
-      recordExceptions:
-        - org.springframework.web.client.HttpServerErrorException
-        - java.util.concurrent.TimeoutException
-        - java.io.IOException

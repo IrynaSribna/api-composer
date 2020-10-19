@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -45,25 +46,25 @@ public class XkcdLookupService implements ComicsDao {
         List<Comic> comics = new LinkedList<>();
 
         // get latest comic
-        URI uriForLatestItem = UriComponentsBuilder.fromUriString(latestItemUrl)
-            .build()
-            .toUri();
-
+        URI uriForLatestItem = getUriForLatestItem();
         ResponseEntity<XkcdItemDTO> latestItemResponse = getXkcdItemDTO(uriForLatestItem);
+
+        if (latestItemResponse.getStatusCode() != HttpStatus.OK) {
+            return Collections.emptyList();
+        }
 
         XkcdItemDTO latestItem = latestItemResponse.getBody();
         int latestId = latestItem.getNum();
-        Comic latestComic = map(latestItemResponse.getBody());
+        Comic latestComic = map(latestItem);
         comics.add(latestComic);
 
         // get older comics
         for (int i = 0; i < AMOUNT_OF_ITEMS; i++) {
-            URI uri = UriComponentsBuilder.fromUriString(itemByIdUrl)
-                .buildAndExpand(Collections.singletonMap("id", --latestId))
-                .toUri();
-
+            URI uri = getUriForItemId(--latestId);
             ResponseEntity<XkcdItemDTO> itemResponse = getXkcdItemDTO(uri);
-
+            if (itemResponse.getStatusCode() != HttpStatus.OK) {
+                return comics;
+            }
             comics.add(map(itemResponse.getBody()));
         }
 
@@ -75,5 +76,17 @@ public class XkcdLookupService implements ComicsDao {
                 .accept(MediaType.APPLICATION_JSON).build(),
             XkcdItemDTO.class
         );
+    }
+
+    private URI getUriForLatestItem() {
+        return UriComponentsBuilder.fromUriString(latestItemUrl)
+            .build()
+            .toUri();
+    }
+
+    private URI getUriForItemId(int id) {
+        return UriComponentsBuilder.fromUriString(itemByIdUrl)
+            .buildAndExpand(Collections.singletonMap("id", id))
+            .toUri();
     }
 }
