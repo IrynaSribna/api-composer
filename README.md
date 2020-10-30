@@ -1,4 +1,4 @@
-# Coding Challenge
+# API COMPOSER
 
 ##### `/comics-service/comics`
 
